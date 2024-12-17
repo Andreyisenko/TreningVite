@@ -1,5 +1,14 @@
-console.log('Gallery');
 import axios from 'axios';
+import * as next from './next-skript'
+
+import SimpleLightbox from 'simplelightbox';
+import 'simplelightbox/dist/simple-lightbox.min.css';
+
+const lightbox = new SimpleLightbox('.gallery a', {
+    captionDelay: 250,
+    captionsData: 'alt',
+    captionPosition: 'top',
+  });
 const Gall = document.querySelector('.gallery');
 // console.log(Gall);
 const btn = document.querySelector('.button-sab');
@@ -8,13 +17,13 @@ const forMM = document.querySelector('.forM');
 // console.log(forMM);
 const btnLoad = document.querySelector('.load-more');
 // console.log(btnLoad);
+btnLoad.addEventListener('click', next.onLoadMore);
+forMM.addEventListener('submit', handleSubmit);
 
 const Url = 'https://pixabay.com/api/';
 const API_KEY = '47413156-c8c9abea8f6d88937b7892740';
 let page = 1;
 let qData;
-btnLoad.addEventListener('click', onLoadMore);
-forMM.addEventListener('submit', handleSubmit);
 
 function handleSubmit(event) {
   event.preventDefault();
@@ -38,8 +47,10 @@ async function getInfo(qData) {
 
     .then(responce =>
       Gall.insertAdjacentHTML('afterbegin', createMarkup(responce.data.hits))
+    
     )
     .catch(error => console.log(error));
+    lightbox.refresh();
 }
 // console.log(getInfo(qData));
 
@@ -69,11 +80,7 @@ function createMarkup(arr) {
     .join('');
 }
 
-function onLoadMore(params) {
-  page += 1
-console.log(page);
- 
-}
+
 
 // getInfo(qData)
 // try {resp => console.log(resp);
