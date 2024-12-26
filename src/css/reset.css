@@ -32,3 +32,9 @@ img {
   max-width: 100%;
   height: auto;
 }
+
+.title-H {
+  color: rgb(7, 157, 57);
+  margin-left: auto;
+  margin-right: auto;
+}
