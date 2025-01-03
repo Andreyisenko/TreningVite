@@ -73,21 +73,30 @@ transform: scaleX(1.2) scaleY(1.2);
   
   .list-item {
 display: flex;
+border-color: black;
+border: solid 1px;
   }
 
   .title-comments {
     width: 200px;
     text-align: center;
+    border-color: black;
+border: solid 1px;
   }
 
   .link {
     display: contents;
     width: 20px;
+    border-color: black;
+border: solid 1px;
   }
   
   .title-views {
     width: 400px;
+    border-color: black;
+    border: solid 1px;
   }
   .title {
 width: 200px;
-  }
+border-color: black;
+border: solid 1px;  }

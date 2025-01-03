@@ -9,6 +9,7 @@ import { createMarku, } from './next-skript';
 // console.log(createMarkup);
 
 const Gall = document.querySelector('.gallery');
+
 const btn = document.querySelector('.button-sab');
 const forMM = document.querySelector('.forM');
 const btnLoad = document.querySelector('.load-more');
@@ -37,16 +38,16 @@ forMM.addEventListener('submit', handleSubmit);
 
 function handleSubmit(event) {
   event.preventDefault();
-
+  
   function makeRequestWithDelay(delay = 1000) {
     const fetchUsers = async () => {
-      for (const arreE of arre) {
+      for (const arreE of list) {
         console.log(arreE);
         namE = arreE;
-
+        
         try {
           // console.log(`Processing: ${arreE}`);
-
+          
           const response = await axios.get(
             `https://public-api.nazk.gov.ua/v2/documents/list/`,
             {
@@ -54,10 +55,11 @@ function handleSubmit(event) {
                 API_KEY,
                 // user_declarant_id: 236750,
                 query: arreE,
-                declaration_year: 2023,
+                declaration_year: 2024,
               },
             }
           );
+          console.log(Gall.children);
           console.log();
           
           if (response.data.count === 0) {
@@ -67,7 +69,7 @@ function handleSubmit(event) {
               createMarku(arreE)
             );
           }
-
+          
           console.log(response.data);
           console.log(response.data.count);
           console.log(response.data.data);
@@ -75,7 +77,7 @@ function handleSubmit(event) {
             'beforeend',
             createMarkup(response.data.data)
           );
-
+          
           console.log(`Response for ${arreE}:`, response.data);
         } catch (error) {
           console.error(`Error fetching data for ${arreE}:`, error);
@@ -85,29 +87,29 @@ function handleSubmit(event) {
     };
     fetchUsers();
   }
-  makeRequestWithDelay(1000);
+  makeRequestWithDelay(100);
 }
 
 function createMarkup(arreE) {
   return arreE
-    .map(
-      ({
-        user_declarant_id,
-        declaration_year,
-        id,
-        date,
-        declaration_type,
-
-        data: {
-          step_0: {
-            data: {  declaration_period },
-          },
-          step_1: {
-            data: { workPlaceEdrpou,
-              city, workPlace, workPost },
+  .map(
+    ({
+      user_declarant_id,
+      declaration_year,
+      id,
+      date,
+      declaration_type,
+      
+      data: {
+        step_0: {
+          data: {  declaration_period },
+        },
+        step_1: {
+          data: { workPlaceEdrpou,
+            city, workPlace, workPost },
           },
         },
-
+        
         end_date,
         start_date,
       }) => `<li class="list-item">
@@ -122,8 +124,9 @@ function createMarkup(arreE) {
       <p class="title-comments">id ${user_declarant_id}</p>
       <p class="title-comments">Місце роботи: ${workPlace}</p>
       <p  class="title-comments">Посада: ${workPost}</p>
-       <hr></hr>
+      
       </li>`
     )
     .join('');
-}
+  }
+  

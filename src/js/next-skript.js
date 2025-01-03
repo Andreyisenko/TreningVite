@@ -17,6 +17,6 @@ export function createMarku(arreE) {
          <a class="link" target="blank" href='#'> Посилання: Працівник декларацію не подав </a>
         <h2 class="title">Декларація за 2023 рік</h2>
         <p class="title-comments">Дата подання декларації: <b>не подав</b></p>
-       <hr></hr>
+     
         </li>`
 }
