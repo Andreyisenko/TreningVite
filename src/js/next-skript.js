@@ -12,35 +12,11 @@
 
 
 export function createMarku(arreE) {
-  return arreE
-  .map(
-      ({
-        declaration_year,
-        date,
-        data: {
-          step_0: {
-            data: { declaration_type, declaration_period },
-          },
-          step_1: {
-            data: { city, workPlace, workPost },
-          },
-        },
-        id,
-
-        user_declarant_id,
-        end_date,
-        start_date,
-      }) => `<li data-id="${id}" class="gallery-item">
-        <h1 class="title-views">Декларант ${namE}</h1>
-        <h2 class="title-views">Декларація за ${declaration_year}</h2>
-        <p class="title-comments">Дата подання декларації не подав</p>
-        <p class="title-comments">Тип декларації ${declaration_type}</p>
-        <p class="title-comments">період декларування:  ${declaration_period}</p>
-        <p class="title-comments">id ${user_declarant_id}</p>
-        <h2 class="title-views">Місце роботи: ${workPlace}</h2>
-        <h2 class="title-views">Посада: ${workPost}</h2>
-        <hr></hr>
+  return `<li  class="list-item">
+        <h1 class="title-views">Декларант ${arreE}</h1>
+         <a class="link" target="blank" href='#'> Посилання: Працівник декларацію не подав </a>
+        <h2 class="title">Декларація за 2023 рік</h2>
+        <p class="title-comments">Дата подання декларації: <b>не подав</b></p>
+       <hr></hr>
         </li>`
-    )
-    .join('');
 }

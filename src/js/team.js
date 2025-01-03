@@ -3,8 +3,9 @@ import axios from 'axios';
 // import uuid from 'uuid';
 // import  uuid from 'uuid';
 // console.log(next.listArr);
+import { list } from './gallery';
 
-// import { createMarku, createMarkup } from './next-skript';
+import { createMarku, } from './next-skript';
 // console.log(createMarkup);
 
 const Gall = document.querySelector('.gallery');
@@ -16,7 +17,7 @@ const item = document.querySelector('.gallery');
 const Url = 'https://public-api.nazk.gov.ua/v2/documents/';
 let API_KEY;
 let page = 1;
-let  qData;
+let qData;
 
 // export let arreE;
 export let namE;
@@ -33,18 +34,19 @@ const arre = [
 ];
 
 forMM.addEventListener('submit', handleSubmit);
+
 function handleSubmit(event) {
   event.preventDefault();
-  
+
   function makeRequestWithDelay(delay = 1000) {
     const fetchUsers = async () => {
       for (const arreE of arre) {
         console.log(arreE);
         namE = arreE;
-        
+
         try {
           // console.log(`Processing: ${arreE}`);
-          
+
           const response = await axios.get(
             `https://public-api.nazk.gov.ua/v2/documents/list/`,
             {
@@ -56,27 +58,37 @@ function handleSubmit(event) {
               },
             }
           );
-          console.log(response);
-          console.log(response.data);
-          console.log(response.data.data);
-          Gall.insertAdjacentHTML('beforeend', createMarkup(response.data.data));
+          console.log();
           
+          if (response.data.count === 0) {
+            // alert("ok")
+            Gall.insertAdjacentHTML(
+              'beforeend',
+              createMarku(arreE)
+            );
+          }
+
+          console.log(response.data);
+          console.log(response.data.count);
+          console.log(response.data.data);
+          Gall.insertAdjacentHTML(
+            'beforeend',
+            createMarkup(response.data.data)
+          );
+
           console.log(`Response for ${arreE}:`, response.data);
         } catch (error) {
           console.error(`Error fetching data for ${arreE}:`, error);
           await new Promise(resolve => setTimeout(resolve, delay));
         }
       }
-      
     };
     fetchUsers();
   }
   makeRequestWithDelay(1000);
 }
 
-
-
- function  createMarkup(arreE) {
+function createMarkup(arreE) {
   return arreE
     .map(
       ({
@@ -84,31 +96,33 @@ function handleSubmit(event) {
         declaration_year,
         id,
         date,
-
+        declaration_type,
 
         data: {
           step_0: {
-            data: { declaration_type, declaration_period},
+            data: {  declaration_period },
           },
           step_1: {
-            data: { city, workPlace, workPost },
+            data: { workPlaceEdrpou,
+              city, workPlace, workPost },
           },
         },
-        
 
         end_date,
         start_date,
-      }) => `<li class="gallery-item">
-      <h1 class="title-views">Декларант ${namE}</h1>
-      <h2 class="title-views">Декларація за ${declaration_year}</h2>
+      }) => `<li class="list-item">
+      <h1 class="title-views" >Декларант: ${namE}</h1>
+      <a class="link" target="blank" href='https://public.nazk.gov.ua/documents/${id}'> Посилання: ${id} </a>
+      
+      <h2 class="title">Декларація за ${declaration_year}</h2>
       <p class="title-comments">Дата подання декларації ${date}</p>
       <p class="title-comments">Тип декларації ${declaration_type}</p>
-      <p class="title-comments">період декларування:  ${declaration_period}</p>
+      <p class="title-comments">Період декларування:  ${declaration_period}</p>
+      <p class="title-comments">ЄДРПОУ:  ${workPlaceEdrpou}</p>
       <p class="title-comments">id ${user_declarant_id}</p>
-      <h2 class="title-views">Місце роботи: ${workPlace}</h2>
-      <h2 class="title-views">Посада: ${workPost}</h2>
-      <p class="title-views">Посилання id: ${id}</p>
-      <hr></hr>
+      <p class="title-comments">Місце роботи: ${workPlace}</p>
+      <p  class="title-comments">Посада: ${workPost}</p>
+       <hr></hr>
       </li>`
     )
     .join('');

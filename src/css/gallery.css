@@ -17,7 +17,8 @@ margin-right: auto;
     align-items: center;
     justify-content: center;
     flex-direction: row;
-    gap: 8px;}
+    gap: 8px;
+  margin-bottom: 100px;}
 
 .button-sab {
     display: flex;
@@ -66,4 +67,27 @@ transform: scaleX(1.2) scaleY(1.2);
     margin-right: auto;
   }
 
+  .link {
+    color: blue;
+  }
   
+  .list-item {
+display: flex;
+  }
+
+  .title-comments {
+    width: 200px;
+    text-align: center;
+  }
+
+  .link {
+    display: contents;
+    width: 20px;
+  }
+  
+  .title-views {
+    width: 400px;
+  }
+  .title {
+width: 200px;
+  }
